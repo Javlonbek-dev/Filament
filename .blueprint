@@ -1,0 +1,16 @@
+created:
+    - database/factories/OrderFactory.php
+    - database/factories/CustomerFactory.php
+    - database/factories/SupplierFactory.php
+    - database/migrations/2024_05_18_105636_create_orders_table.php
+    - database/migrations/2024_05_18_105637_create_customers_table.php
+    - database/migrations/2024_05_18_105638_create_suppliers_table.php
+    - database/migrations/2024_05_18_105639_create_order_supplier_table.php
+    - app/Models/Order.php
+    - app/Models/Customer.php
+    - app/Models/Supplier.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Order: { name: string, description: string, amount: integer, price: float, customer_id: 'unsignedInteger nullable', supplier_id: 'unsignedInteger nullable', relationships: { belongsTo: Customer, belongsToMany: Supplier } }
+    Customer: { firstname: sting, lastname: string, phone: string, email: string, relationships: { hasMany: Order } }
+    Supplier: { name: string, phone: string, current_locate: string, relationships: { belongsToMany: Order } }

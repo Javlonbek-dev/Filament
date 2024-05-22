@@ -1,0 +1,27 @@
+models:
+
+  Order:
+    name: string
+    description: string
+    amount: integer
+    price: float
+    customer_id: unsignedInteger nullable
+    supplier_id: unsignedInteger nullable
+    relationships:
+      belongsTo: Customer
+      belongsToMany: Supplier
+
+  Customer:
+    firstname: sting
+    lastname: string
+    phone: string
+    email: string
+    relationships:
+      hasMany: Order
+
+  Supplier:
+    name: string
+    phone: string
+    current_locate: string
+    relationships:
+      belongsToMany: Order
