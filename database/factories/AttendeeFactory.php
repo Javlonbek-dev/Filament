@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use PHPUnit\Framework\Attributes\Ticket;
 
@@ -22,6 +23,8 @@ class AttendeeFactory extends Factory
             'email'=>$this->faker->safeEmail,
             'ticket_cost'=>5000,
             'is_paid'=>true,
+            'order_id'=>Order::factory(),
+            'created_at'=>$this->faker->dateTimeBetween('-3 months', 'now'),
         ];
     }
 }
