@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attendee;
 use App\Models\Customer;
 use App\Models\Group;
 use App\Models\OrderDetail;
@@ -21,8 +22,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 //        Customer::factory(10)->create();
 //        Student::factory(10)->create();
-        Supplier::factory(10)->create();
-        OrderDetail::factory(10)->create();
+//        Attendee::factory(300)->create();
+//        Supplier::factory(10)->create();
+//        OrderDetail::factory(10)->create();
         User::factory()->create([
             'name' => 'javlon',
             'email' => 'test@example.com',
