@@ -3,8 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SupplierResource\Pages;
-use App\Filament\Resources\SupplierResource\RelationManagers;
-use App\Filament\Resources\SupplierResourcesResource\RelationManagers\OrderDetailsRelationManager;
 use App\Models\Supplier;
 use App\OrderDetailStatus;
 use Filament\Forms\Form;
@@ -24,7 +22,17 @@ class SupplierResource extends Resource
 //    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Second Group';
 
-    protected static ?string $recordTitleAttribute='name';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return Supplier::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'gray';
+    }
 
     public static function form(Form $form): Form
     {
@@ -102,12 +110,12 @@ class SupplierResource extends Resource
                                         return $record->order_details()->where('status', OrderDetailStatus::APPROVED)->count() > 0 ? 'Previuos Supplier' : 'Has Not Spoken';
                                     })
                                     ->badge()
-                                ->color(function ($state){
-                                    if($state==='Previuos Supplier'){
-                                        return 'success';
-                                    }
-                                    return  'primary';
-                                })
+                                    ->color(function ($state) {
+                                        if ($state === 'Previuos Supplier') {
+                                            return 'success';
+                                        }
+                                        return 'primary';
+                                    })
                             ]),
                     ]),
 
@@ -115,8 +123,8 @@ class SupplierResource extends Resource
                     ->schema([
                         TextEntry::make('current_locate'),
                         TextEntry::make('qualifications')
-                        ->listWithLineBreaks()
-                        ->bulleted()
+                            ->listWithLineBreaks()
+                            ->bulleted()
                     ])
 
             ]);

@@ -19,6 +19,16 @@ class CustomerResource extends Resource
 //    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'First Group';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return Customer::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'danger';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
