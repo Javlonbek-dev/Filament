@@ -6,9 +6,6 @@ use App\Filament\Resources\OrderDetailResource\Pages;
 use App\Filament\Resources\OrderDetailResource\RelationManagers;
 use App\Models\OrderDetail;
 use App\OrderDetailLength;
-use App\OrderDetailStatus;
-use Filament\Actions\Action;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
@@ -24,6 +21,15 @@ class OrderDetailResource extends Resource
 
 //    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'First Group';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return OrderDetail::count();
+    }
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
+    }
 
     public static function form(Form $form): Form
     {
@@ -127,18 +133,18 @@ class OrderDetailResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('approve')
-            ->action(function (Collection $query){
-                $query->each->approved();
-            }),
+                        ->action(function (Collection $query) {
+                            $query->each->approved();
+                        }),
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make()
                 ]),
             ])
             ->headerActions([
                 Tables\Actions\Action::make('export')
-                ->action(function ($livewire){
-                    return $livewire->getFilteredTableQuery();
-                })
+                    ->action(function ($livewire) {
+                        return $livewire->getFilteredTableQuery();
+                    })
             ]);
     }
 

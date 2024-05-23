@@ -4,16 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Models\Customer;
 use App\Models\Order;
-use App\Models\Supplier;
-use App\Region;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class OrderResource extends Resource
 {
@@ -22,6 +17,16 @@ class OrderResource extends Resource
 //    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Second Group';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return Order::count();
+    }
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'info';
+    }
+
 
     public static function form(Form $form): Form
     {
@@ -36,6 +41,7 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('amount')
                     ->numeric()

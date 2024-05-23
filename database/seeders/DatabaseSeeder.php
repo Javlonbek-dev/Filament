@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
 //        Student::factory(10)->create();
 //        Attendee::factory(300)->create();
 //        Supplier::factory(10)->create();
-//        OrderDetail::factory(10)->create();
-        User::factory()->create([
-            'name' => 'javlon',
-            'email' => 'test@example.com',
-        ]);
+        OrderDetail::factory(100)->create();
+//        User::factory()->create([
+//            'name' => 'javlon',
+//            'email' => 'test@example.com',
+//        ]);
 
     }
 }

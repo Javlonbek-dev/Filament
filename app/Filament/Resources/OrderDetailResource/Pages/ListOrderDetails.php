@@ -5,11 +5,13 @@ namespace App\Filament\Resources\OrderDetailResource\Pages;
 use App\Filament\Resources\OrderDetailResource;
 use App\OrderDetailStatus;
 use Filament\Actions;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 
 class ListOrderDetails extends ListRecords
 {
+    use ExposesTableToWidgets;
     protected static string $resource = OrderDetailResource::class;
 
     public function getTabs(): array
@@ -29,6 +31,13 @@ class ListOrderDetails extends ListRecords
                     return $query->where('status', OrderDetailStatus::SUBMITTED);
                 })
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+      return [
+        OrderDetailResource\Widgets\OrderDetailsChartWidget::class
+      ];
     }
 
     protected function getHeaderActions(): array
