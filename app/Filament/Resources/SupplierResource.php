@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SupplierResource\Pages;
 use App\Models\Supplier;
 use App\OrderDetailStatus;
+use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\ImageEntry;
@@ -63,7 +65,12 @@ class SupplierResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('downloadPDF')
+                    ->label('Download PDF')
+                    ->action(function ($record) {
+                        return redirect()->route('generate-application-pdf', $record->id);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -97,6 +104,7 @@ class SupplierResource extends Resource
                     ->schema([
                         ImageEntry::make('avatar')
                             ->circular(),
+                        TextEntry::make('file'),
 
                         Group::make()
                             ->columnSpan(2)
@@ -124,7 +132,13 @@ class SupplierResource extends Resource
                         TextEntry::make('current_locate'),
                         TextEntry::make('qualifications')
                             ->listWithLineBreaks()
-                            ->bulleted()
+                            ->bulleted(),
+                    ]),
+                Section::make('Uploaded File')
+                    ->schema([
+                        TextEntry::make('file')
+                            ->label('Uploaded File')
+                            ->view('filament.components.file-download'), // Custom blade view for download link
                     ])
 
             ]);

@@ -44,6 +44,10 @@ class Supplier extends Model
                     ->directory('suppliers')
                     ->preserveFilenames()
                     ->maxSize(1024 * 1024 * 10),
+                FileUpload::make('file')
+                    ->directory('uploads') // Save the file to 'storage/app/public/uploads'
+                    ->disk('public')
+                    ->preserveFilenames(), // Use the 'public' disk
                 TextInput::make('phone')
                     ->tel(),
                 CheckboxList::make('qualifications')
@@ -65,4 +69,5 @@ class Supplier extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
 }
